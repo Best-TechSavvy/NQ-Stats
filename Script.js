@@ -1,9 +1,59 @@
 var dataset = [
-    ["Name", "MP", "firepower", "Armor", "W.Range", "Speed", "Catagery"],
-    ["Rhino", "10", "550", "200", "6", "2-3", "Land"],
-    ["Vab", "10", "Land"]
+    ["Name", "Firepower", "Armor", "W.Range", "Sight", "MP", "Group", "Speed", "Feul", "Reload", "Catagery", "Type"],
+    ["Rhino", "24-6000", "200", "6", "9", "10", "7", "2","5", "6", "Land", "Artillery"],
+    ["BM-21", "10", "500", "50", "8", "27", "3", "600", "8", "27", "Land", "Fodders"],
+    ["Vab", "10", "500", "100", "8", "19", "2", "600", "8", "27", "Amphibious", "Fodders"],
+    ["IBoat", "25", "1000", "800", "8", "27", "3", "600", "8", "27", "Water", "Fodders"],
+    ["Stormers", "25", "1201", "600", "8", "27", "3", "600", "8", "27", "Land", "Anti-Air"]
 ];
 
+function filterTable() {
+    var input = document.getElementById("query").value.toLowerCase();
+    var container = document.getElementById("table");
+    container.innerHTML = ""; // Clear previous content
+
+    for (var i = 0; i < dataset.length; i++) {
+        var row = dataset[i];
+
+        // Show all rows if input is empty, or show matching rows
+        if (input === "" || i === 0 || row.join(" ").toLowerCase().includes(input)) {
+            var rowDiv = document.createElement("div");
+            rowDiv.className = "row";
+
+            for (var j = 0; j < row.length; j++) {
+                var cell = row[j];
+                var div = document.createElement("div");
+                div.className = "cell" + (i === 0 ? " header" : "");
+                div.textContent = cell;
+                rowDiv.appendChild(div);
+            }
+
+            container.appendChild(rowDiv);
+        }
+    }
+}
+
+window.onload = function table() {
+    var container = document.getElementById("table");
+    container.innerHTML = ""; 
+
+    for (var i = 0; i < dataset.length; i++) {
+        var row = dataset[i];
+        var rowDiv = document.createElement("div");
+        rowDiv.className = "row";
+
+        for (var j = 0; j < row.length; j++) {
+            var cell = row[j];
+            var div = document.createElement("div");
+            div.className = "cell" + (i === 0 ? " header" : "");
+            div.textContent = cell;
+            rowDiv.appendChild(div);
+        }
+        container.appendChild(rowDiv);
+    }
+}
+
+/*
 var users = [
     {username: "guest", password: "Thanks", level: "default"},
     {username: "alex", password: "hackeis@12ohio", level: "admin"}, 
@@ -27,4 +77,4 @@ function submit() {
 
     document.getElementById("user").value = "";
     document.getElementById("pass").value = "";
-};
+};*/
