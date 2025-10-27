@@ -8,22 +8,16 @@
     </head>
     <body>
         <div class="navbar">
-            <a href="home.html"><h1>Navy data</h1></a>
-            <div class="search">
+            <div class="search-container">
                 <input type="search" id="query" name="Search bar" placeholder="Search bar">
-                <button id="find">search</button>
+                <button id="find" onclick="filterTable()">search</button>
             </div>
-            <a href="logon.html"><button class="btn" id="logon">login</button></a>
         </div>
         <div class="main">
-            <div id="table">
-                <div id="header">
-                    <!--"Name", "MP", "Pirepower", "Armor", "W.Range", "Speed"-->
-                </div>
-                <div id="info">
-
-                </div>
-            </div>
+            <div id="table" class="table"></div>
+        </div>
+        <div class="footer">
+            <p>&copy; 2025 Navy Quest Stats. All rights reserved.</p>
         </div>
     </body>
 </html>
