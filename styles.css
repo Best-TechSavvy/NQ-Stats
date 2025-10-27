@@ -1,7 +1,12 @@
 .navbar {
-      background-color:black;
-      color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Keeps it above other content */
+  background-color: black;
+  color: white;
+  padding: 10px;
 }
+
 .navbar h1{
     text-align: center;
 }
@@ -9,6 +14,7 @@
 navbar.a {
     float: right;
 }
+
 
 .btn {
     color: white;
@@ -20,24 +26,87 @@ navbar.a {
     cursor: pointer;
 }
 
-@media screen and (max-width: 600px) {
-  .navbar a:not(:first-child) {display: none;}
-  .navbar a.icon {
-    float: right;
-    display: block;
-  }
+.table {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 5px;
+
 }
 
-@media screen and (max-width: 600px) {
-  .navbar.responsive {position: relative;}
-  .navbar.responsive .icon {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  .navbar.responsive a {
-    float: none;
-    display: block;
-    text-align: left;
-  }
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+}
+
+.cell {
+    padding: 8px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    text-align: center;
+    min-width: 80px;
+}
+
+.header {
+    font-weight: bold;
+    background-color: #ddd;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin: 5px auto;
+    align-items: center; /* Center rows horizontally */
+
+}
+
+#query {
+    padding: 10px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+    font-size: 16px;
+}
+
+#find {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+#find:hover {
+    background-color: #0056b3;
+}
+
+.footer {
+  text-align: center;
+  padding: 15px 0;
+  background-color: #000000;
+  color: #7a7a7a;
+  font-size: 14px;
+  border-top: 1px solid #ccc;
+  margin-top: 40px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full viewport height */
+}
+
+.main {
+  flex: 1; /* Pushes footer to bottom if content is short */
 }
