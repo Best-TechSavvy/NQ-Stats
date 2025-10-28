@@ -18,7 +18,7 @@ navbar.a {
 
 .btn {
     color: white;
-    background-color: #04AA6D;
+    background-color: #009b62;
     padding: 10px 10px;
     text-align: center;
     font-size: 16px;
@@ -26,31 +26,38 @@ navbar.a {
     cursor: pointer;
 }
 
-.table {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 5px;
 
+.table {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  margin: auto;
 }
 
 .row {
-    display: flex;
-    flex-direction: row;
-    gap: 0px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr); /* 12 columns for your dataset */
+  width: 100%;
 }
 
 .cell {
-    padding: 8px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    text-align: center;
-    min-width: 80px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  text-align: center;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 100px;
 }
 
 .header {
-    font-weight: bold;
-    background-color: #ddd;
+  font-weight: bold;
+  background-color: #ddd;
 }
 
 .search-container {
@@ -109,4 +116,43 @@ html, body {
 
 .main {
   flex: 1; /* Pushes footer to bottom if content is short */
+}
+
+.sort-btn {
+  margin-left: 5px;
+  padding: 2px 6px;
+  font-size: 12px;
+  cursor: pointer;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.sort-btn:hover {
+  background-color: #ddd;
+}
+
+.form {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 30px;
+    border: 1px solid #0008ff;
+    border-radius: 8px;
+    background-color: #7897ff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.intext {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
