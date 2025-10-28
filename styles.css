@@ -1,0 +1,158 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Keeps it above other content */
+  background-color: black;
+  color: white;
+  padding: 10px;
+}
+
+.navbar h1{
+    text-align: center;
+}
+
+navbar.a {
+    float: right;
+}
+
+
+.btn {
+    color: white;
+    background-color: #009b62;
+    padding: 10px 10px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+
+.table {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  margin: auto;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr); /* 12 columns for your dataset */
+  width: 100%;
+}
+
+.cell {
+  padding: 8px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  text-align: center;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 100px;
+}
+
+.header {
+  font-weight: bold;
+  background-color: #ddd;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin: 5px auto;
+    align-items: center; /* Center rows horizontally */
+
+}
+
+#query {
+    padding: 10px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+    font-size: 16px;
+}
+
+#find {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+#find:hover {
+    background-color: #0056b3;
+}
+
+.footer {
+  text-align: center;
+  padding: 15px 0;
+  background-color: #000000;
+  color: #7a7a7a;
+  font-size: 14px;
+  border-top: 1px solid #ccc;
+  margin-top: 40px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full viewport height */
+}
+
+.main {
+  flex: 1; /* Pushes footer to bottom if content is short */
+}
+
+.sort-btn {
+  margin-left: 5px;
+  padding: 2px 6px;
+  font-size: 12px;
+  cursor: pointer;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.sort-btn:hover {
+  background-color: #ddd;
+}
+
+.form {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 30px;
+    border: 1px solid #0008ff;
+    border-radius: 8px;
+    background-color: #7897ff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.intext {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
