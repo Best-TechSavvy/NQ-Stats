@@ -156,3 +156,7 @@ html, body {
     border-radius: 4px;
     box-sizing: border-box;
 }
+
+.footer a {
+    color: inherit; /* Inherit color from parent */
+}
