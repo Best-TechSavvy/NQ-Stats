@@ -14,4 +14,4 @@ https://navyqueststats.netlify.app/
 This site is powered by Netlify, if you want to know more about it please visit netlify.com.
 
 Here is the github link.
-https://best-techsavvy.github.io/Navy-Quest-Stats/
+ https://best-techsavvy.github.io/NQ-Stats/
