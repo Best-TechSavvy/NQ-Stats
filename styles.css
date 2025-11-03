@@ -1,18 +1,20 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: white;
+}
+
 .navbar {
-  position: sticky;
-  top: 0;
-  z-index: 1000; /* Keeps it above other content */
-  background-color: black;
-  color: white;
-  padding: 10px;
-}
-
-.navbar h1{
-    text-align: center;
-}
-
-navbar.a {
-    float: right;
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+    z-index: 1000; /* Keeps it above other content */
+    background-color: black;
+    color: white;
+    padding: 20px 20px;
 }
 
 
@@ -22,57 +24,59 @@ navbar.a {
     padding: 10px 10px;
     text-align: center;
     font-size: 16px;
-    margin: 4px 2px;
+    margin: 0;
     cursor: pointer;
+}
+
+.navbtn {
+    display: flex;
+    align-items: center;
 }
 
 
 .table {
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
-  margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: fit-content; 
+    flex: 1; /* Takes up remaining space */
 }
 
 .row {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr); /* 12 columns for your dataset */
-  width: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); /* 12 columns for your dataset */
+    width: 800px;
 }
 
 .cell {
-  padding: 8px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  text-align: center;
-  box-sizing: border-box;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-width: 100px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    text-align: center;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 110px;
 }
 
 .header {
-  font-weight: bold;
-  background-color: #ddd;
+    font-weight: bold;
+    background-color: #ddd;
 }
 
 .search-container {
     display: flex;
-    justify-content: center;
-    margin: 5px auto;
-    align-items: center; /* Center rows horizontally */
-
+    width: fit-content;
 }
 
 #query {
     padding: 10px;
     width: 250px;
     border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px;
+    border-radius: 5px;
     outline: none;
     font-size: 16px;
 }
@@ -92,41 +96,43 @@ navbar.a {
     background-color: #0056b3;
 }
 
+
 .footer {
-  text-align: center;
-  padding: 15px 0;
-  background-color: #000000;
-  color: #7a7a7a;
-  font-size: 14px;
-  border-top: 1px solid #ccc;
-  margin-top: 40px;
+    text-align: center;
+    padding: 15px 0;
+    background-color: #000000;
+    color: #7a7a7a;
+    font-size: 14px;
+    border-top: 1px solid #ccc;
+    margin-top: 40px;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+body {
+  background-image: url("navy.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-.page-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Full viewport height */
-}
 
 .main {
-  flex: 1; /* Pushes footer to bottom if content is short */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px; /* Optional spacing between table and shown box */
+    margin: 20px auto;
+    max-width: 1200px; 
 }
 
 .sort-btn {
-  margin-left: 5px;
-  padding: 2px 6px;
-  font-size: 12px;
-  cursor: pointer;
-  background-color: #eee;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  flex-shrink: 0;
+    margin-left: 5px;
+    padding: 2px 6px;
+    font-size: 12px;
+    cursor: pointer;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    flex-shrink: 0;
 }
 
 .sort-btn:hover {
@@ -159,4 +165,23 @@ html, body {
 
 .footer a {
     color: inherit; /* Inherit color from parent */
+    width: 100%;
+}
+
+.shown {
+  border: 1px solid black;
+  padding: 10px;
+  width: 20%;
+  float: right;
+  flex-shrink: 0; /* Prevents shrinking */
+  background-color: #ccc;
+}
+.shown h3 {
+  margin-bottom: 10px;
+}
+
+.shown label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
 }
