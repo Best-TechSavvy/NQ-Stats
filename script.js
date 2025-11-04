@@ -1,6 +1,6 @@
 //important lists are bellow
 var dataset = [
-  ["Name", "Firepower", "Armor", "W.Range", "Sight", "MP", "Group", "Speed", "Feul", "Reload", "Catagery", "Type", "Steel", "Almunuim", "Feul"],
+  ["Name", "Firepower", "Armor", "W.Range", "Sight", "MP", "Group", "Speed", "Feul", "Reload", "Catagery", "Type", "Steel", "Almunuim", "Fuel"],
   ["Rhino", "24-6000", "200", "6", "9", "10", "7", "2", "5", "6", "Land", "Artillery", "45000", "35000", "5750"],
   ["BM-21", "10", "500", "50", "8", "27", "3", "600", "8", "27", "Land", "Fodders", "50000", "70000", "4000"],
   ["Vab", "10", "500", "100", "8", "19", "2", "600", "8", "27", "Amphibious", "Fodders", "50000", "70000", "4000"],
@@ -18,7 +18,6 @@ var users = [
 //homepage code is bellow
 const maxVisibleColumns = 8;
 let visibleColumns = [];
-
 
 let currentSort = {
   column: null,
@@ -144,7 +143,6 @@ window.onload = function () {
 //homepage code is above
 
 //logon.html code is bellow
-
 function submit() {
     var username = document.getElementById("user").value;
     var password = document.getElementById("pass").value;
@@ -169,39 +167,64 @@ function submit() {
 //logon.html code is above
 
 //form.html code is bellow
-function check() {
-    const fieldIds = [
-        "Name", "Firepower", "Armor", "WRange", "Sight", "MP",
-        "Group", "Speed", "Feul", "Reload", "Catagery", "Type"
-    ];
+function renderform() {
+    var select = document.getElementById("fintext");
+    select.innerHTML = "";
 
-    const values = fieldIds.map(id => document.getElementById(id).value.trim());
+    dataset[0].forEach(field => {
+        const input = document.createElement("input");
+        input.className = "intext";
+        input.type = "text";
+        input.id = field;
+        input.name = field;
+        input.placeholder = field;
+
+        select.appendChild(input);
+        select.appendChild(document.createElement("br"));
+    });
+}
+
+if (window.location.pathname.includes("form.html")) {
+    window.onload = renderform;
+}
+
+function check() {
+    const fieldIds = dataset[0];
+    const values = fieldIds.map(id => {
+        const input = document.getElementById(id);
+        return input ? input.value.trim() : "";
+    });
 
     if (values.every(v => v !== "")) {
         const newEntry = `[${values.map(v => `"${v}"`).join(", ")}]`;
         const JScodeElement = document.getElementById("JScode");
         const current = JScodeElement.textContent.trim();
-
         JScodeElement.textContent = current ? current + ', ' + newEntry : newEntry;
 
-        fieldIds.forEach(id => document.getElementById(id).value = "");
+        fieldIds.forEach(id => {
+            const input = document.getElementById(id);
+            if (input) input.value = "";
+        });
     }
 }
 
 function copy() {
-    const text = document.getElementById("JScode").innerText;
-    // Get the text field
-    var copyText = document.getElementById("myInput");
+    const text = document.getElementById("JScode").textContent;
 
-    // Select the text field
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); // For mobile devices
-
-    // Copy the text inside the text field
-    navigator.clipboard.writeText(copyText.value);
-
-    // Alert the copied text
-    alert("Copied the text: " + copyText.value);
-    document.getElementById("JScode").textContent = "Copied the text: " + copyText.value;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert("Copied the text: " + text);
+        }).catch(err => {
+            fallbackCopy(text);
+        });
+    } else {
+      const tempInput = document.createElement("textarea");
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+      alert("Copied the text: " + text);
+    }
 }
 //form.html code is above
