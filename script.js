@@ -1,11 +1,11 @@
 //important lists are bellow
 var dataset = [
-  ["Name", "Firepower", "Armor", "W.Range", "Sight", "MP", "Group", "Speed", "Feul", "Reload", "Catagery", "Type", "Steel", "Almunuim", "Fuel"],
-  ["Rhino", "24-6000", "200", "6", "9", "10", "7", "2", "5", "6", "Land", "Artillery", "45000", "35000", "5750"],
-  ["BM-21", "10", "500", "50", "8", "27", "3", "600", "8", "27", "Land", "Fodders", "50000", "70000", "4000"],
-  ["Vab", "10", "500", "100", "8", "19", "2", "600", "8", "27", "Amphibious", "Fodders", "50000", "70000", "4000"],
-  ["IBoat", "25", "1000", "800", "8", "27", "3", "600", "8", "27", "Water", "Fodders", "50000", "70000", "4000"],
-  ["Stormers", "25", "1201", "600", "8", "27", "3", "600", "8", "27", "Land", "Anti-Air", "50000", "70000", "4000"]
+  ["Name", "Firepower", "Armor", "W.Range", "Sight", "MP", "Group", "Speed", "Feul", "Reload", "Catagery", "Type", "Steel", "Almunuim", "Fuel", "Special"],
+  ["Rhino", "24-6000", "200", "6", "9", "10", "7", "2", "5", "6", "Land", "Artillery", "45000", "35000", "5750", "3x bases"],
+  ["BM-21", "10", "500", "50", "8", "27", "3", "600", "8", "27", "Land", "Fodders", "50000", "70000", "4000", "1.5x firing"],
+  ["Vab", "10", "500", "100", "8", "19", "2", "600", "8", "27", "Amphibious", "Fodders", "50000", "70000", "4000", "Air attackable"],
+  ["IBoat", "25", "1000", "800", "8", "27", "3", "600", "8", "27", "Water", "Fodders", "50000", "70000", "4000", "Air attackable"],
+  ["Stormers", "25", "1201", "600", "8", "27", "3", "600", "8", "27", "Land", "Anti-Air", "50000", "70000", "4000", "3x Air"]
 ];
 
 var users = [
@@ -16,7 +16,7 @@ var users = [
 //important lists are above
 
 //homepage code is bellow
-const maxVisibleColumns = 8;
+var maxVisibleColumns = 8;
 let visibleColumns = [];
 
 let currentSort = {
@@ -24,8 +24,8 @@ let currentSort = {
   ascending: true
 };
 
-function createColumnSelectors() {
-  const selectorContainer = document.getElementById("column-selectors");
+function createColumnSelectors(div) {
+  const selectorContainer = document.getElementById(div);
   const headers = dataset[0];
   selectorContainer.innerHTML = ""; // Clear existing
   headers.forEach((header, index) => {
@@ -45,7 +45,7 @@ function createColumnSelectors() {
           visibleColumns.push(index);
         } else {
           checkbox.checked = false;
-          alert("You can only select up to 8 columns.");
+          alert("You can only select up to "+ maxVisibleColumns +" columns.");
         }
       } else {
         visibleColumns = visibleColumns.filter(i => i !== index);
@@ -136,10 +136,6 @@ function filterTable() {
   renderTable(filtered);
 }
 
-window.onload = function () {
-  createColumnSelectors();
-  filterTable(); // Initial render with filtering
-};
 //homepage code is above
 
 //logon.html code is bellow
@@ -170,8 +166,10 @@ function submit() {
 function renderform() {
     var select = document.getElementById("fintext");
     select.innerHTML = "";
-
     dataset[0].forEach(field => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "input-wrapper";
+
         const input = document.createElement("input");
         input.className = "intext";
         input.type = "text";
@@ -179,15 +177,10 @@ function renderform() {
         input.name = field;
         input.placeholder = field;
 
-        select.appendChild(input);
-        select.appendChild(document.createElement("br"));
+        wrapper.appendChild(input);
+        select.appendChild(wrapper);
     });
 }
-
-if (window.location.pathname.includes("form.html")) {
-    window.onload = renderform;
-}
-
 function check() {
     const fieldIds = dataset[0];
     const values = fieldIds.map(id => {
@@ -195,12 +188,15 @@ function check() {
         return input ? input.value.trim() : "";
     });
 
+    // Only proceed if all fields are filled
     if (values.every(v => v !== "")) {
         const newEntry = `[${values.map(v => `"${v}"`).join(", ")}]`;
         const JScodeElement = document.getElementById("JScode");
-        const current = JScodeElement.textContent.trim();
-        JScodeElement.textContent = current ? current + ', ' + newEntry : newEntry;
 
+        // Always add a comma before the new entry
+        JScodeElement.textContent += ', ' + newEntry;
+
+        // Clear all input fields
         fieldIds.forEach(id => {
             const input = document.getElementById(id);
             if (input) input.value = "";
@@ -228,3 +224,71 @@ function copy() {
     }
 }
 //form.html code is above
+
+//phone object bellow
+function more(){
+  var sepnav = document.getElementById("sepnav");
+  var basic = document.getElementById("basic");
+  sepnav.style.display = "block";
+  basic.style.display = "none";
+}
+
+function exit(){
+  var sepnav = document.getElementById("sepnav");
+  var basic = document.getElementById("basic");
+  sepnav.style.display = "none";
+  basic.style.display = "block";
+}
+//phone object above
+
+// onload sectoin is bellow
+function load() {
+  var screen = "computer";
+  var width = window.innerWidth;
+  var phone = ["sepnav", "sepbtn"]
+  var computer = ["formbtn", "logbtn", "compselect"]
+
+  if (width < 768) {
+    screen = "phone";
+    maxVisibleColumns = 4;
+  } else if(width < 1200) {
+    screen = "computer";
+    maxVisibleColumns = 6;
+  } else {
+    screen = "computer";
+    maxVisibleColumns = 8; 
+  }
+
+  // Run page-specific functions
+  if (window.location.pathname.includes("form.html")) {
+    renderform();
+  } else if (window.location.pathname.includes("logon.html")) {
+    // Add logon-specific logic here if needed
+  } else {
+    if (screen === "computer"){
+      for (let i = 0; i < phone.length; i++) {
+        document.getElementById(phone[i]).style.display = "none";
+      }
+      for (let i = 0; i < computer.length; i++) {
+        document.getElementById(computer[i]).style.display = "block";
+      }
+      createColumnSelectors("column-selectors");
+      filterTable();
+    }
+    if (screen === "phone"){
+      for (let i = 0; i < phone.length; i++) {
+        document.getElementById(phone[i]).style.display = "block";
+      }
+      for (let i = 0; i < computer.length; i++) {
+        document.getElementById(computer[i]).style.display = "none";
+      }
+      maxVisibleColumns = 4;
+      createColumnSelectors("phone-select");
+      filterTable();
+      exit();
+    }
+  }
+};
+
+window.onload = function(){load();}
+//onload sectoin is above
