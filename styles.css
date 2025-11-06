@@ -30,6 +30,7 @@ body {
 .navbtn {
     display: flex;
     align-items: center;
+    width: fit-content;
 }
 
 .btn {
@@ -55,21 +56,6 @@ body {
     outline: none;
     font-size: 16px;
 }
-
-#find {
-    padding: 10px 20px;
-    border: 1px solid #ccc;
-    background-color: #007BFF;
-    color: white;
-    border-radius: 0 4px 4px 0;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-#find:hover {
-    background-color: #0056b3;
-}
 /*Navigation Bar Above*/
 
 
@@ -86,6 +72,7 @@ body {
     display: flex;
     flex-direction: column;
     width: fit-content; 
+    margin-left: 10px;
     flex: 1; /* Takes up remaining space */
 }
 
@@ -131,6 +118,7 @@ body {
 }
 /*table above*/
 
+
 /*check box list bellow*/
 .shown {
   border: 1px solid black;
@@ -153,8 +141,7 @@ body {
 
 /*forms bellow*/
 .form {
-    max-width: 400px;
-    margin: 100px auto;
+    margin: 30px auto;
     padding: 30px;
     border: 1px solid #0008ff;
     border-radius: 8px;
@@ -175,6 +162,17 @@ body {
     border-radius: 4px;
     box-sizing: border-box;
 }
+
+#fintext {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.input-wrapper {
+  width: 100%;
+}
 /*form above*/
 
 /*footer bellow*/
@@ -193,3 +191,42 @@ body {
     width: 100%;
 }
 /*footer above*/
+
+/*phone object bellow*/
+#sepnav{
+    display: flex;
+    background-color: #000000;
+    padding-bottom: 15%;
+    justify-content: center;
+}
+/*phone object above*/
+
+/*responsive styles bellow*/
+@media (max-width: 768px) {
+    .main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .row {
+        grid-template-columns: repeat(12, 1fr); /* fewer columns on small screens */
+        width: 100%;
+    }
+
+    .shown h3
+    .shown label {
+        color: white;
+    }
+
+    .shown {
+        display: flex;
+        width: 40%;
+        float: none;
+        flex-wrap: wrap;
+        margin-left: 20%;
+    }
+    #fintext {
+        grid-template-columns: 1fr;
+    }
+}
+/*responsive styles above*/
