@@ -1,14 +1,11 @@
 # Navy-Quest-Stats
-Hello freinds, 
-I play Navy Quest but it hard to play on a phone. 
-So I made an informative website make it easier to access information about viechles on Navy Quest.
-Thankfully, github allows public repo to for free pages services. Now github link can be used as back up.
-Because github give me a longer link, I will continue to use netilfy side by side.
-I have given both link bellow, use them as you like!
+Hello friends! 👋
+I play Navy Quest, but I find it hard to play on a phone. So, I created an informative website to make it easier to access details about vehicles in Navy Quest.
+Thankfully, GitHub allows free public repositories with Pages services, so I’ve added a backup version of the site there. Since GitHub gives a longer link, I’ll continue using Netlify side by side for convenience.
+Feel free to use whichever link works best for you!
+# Website Links
 
-Here is the link for the website that I created:
-https://navyqueststats.netlify.app/
-This site is powered by Netlify, if you want to know more about it please visit netlify.com.
+Netlify-powered site: https://navyqueststats.netlify.app/
+Powered by https://www.netlify.com/
 
-Here is the github link.
- https://best-techsavvy.github.io/NQ-Stats/
+GitHub Pages backup: https://best-techsavvy.github.io/NQ-Stats/
