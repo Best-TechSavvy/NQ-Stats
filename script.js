@@ -90,7 +90,12 @@ function renderTable(data) {
         div.appendChild(label);
         div.appendChild(button);
       } else {
-        div.textContent = cell;
+        // Format numbers with commas if numeric
+        if (!isNaN(cell) && cell.trim() !== "") {
+          div.textContent = Number(cell).toLocaleString();
+        } else {
+          div.textContent = cell;
+        }
       }
 
       rowDiv.appendChild(div);
@@ -293,6 +298,7 @@ function load() {
 
 window.onload = function(){load();}
 //onload sectoin is above
+
 
 
 
