@@ -1,6 +1,6 @@
 //important lists are bellow
 var dataset = [
-  ["Name", "Firepower", "Armor", "W.Range", "Sight", "MP", "Group", "Speed", "Feul", "Reload", "Catagery", "Type", "Steel", "Almunuim", "Fuel", "Special"],
+  ["Name", "Firepower", "Armor", "W.Range", "Sight", "MP", "Group", "Speed", "Feul", "Reload", "Category", "Type", "Steel", "Aluminum", "Fuel", "Special"],
   ["Rhino", "24-6000", "200", "6", "9", "10", "7", "2", "5", "6", "Land", "Artillery", "45000", "35000", "5750", "3x bases"],
   ["KA-50", "70-17500", "6000", "18", "25", "3650", "1", "5", "250", "0", "N/A", "N/A", "550,000", "2,750,000", "0", "N/A"]
   ["BM-21", "10", "500", "50", "8", "27", "3", "600", "8", "27", "Land", "Fodders", "50000", "70000", "4000", "1.5x firing"],
@@ -293,4 +293,5 @@ function load() {
 
 window.onload = function(){load();}
 //onload sectoin is above
+
 
