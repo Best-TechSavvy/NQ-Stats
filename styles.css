@@ -173,6 +173,28 @@ body {
 .input-wrapper {
   width: 100%;
 }
+select.dropdown {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #fff;
+    font-size: 14px;
+    color: #333;
+    appearance: none; /* Removes default arrow styling */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    cursor: pointer;
+}
+
+select.dropdown:focus {
+    border-color: #0008ff;
+    outline: none;
+}
 /*form above*/
 
 /*footer bellow*/
