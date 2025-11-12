@@ -2,7 +2,7 @@
 var dataset = [
   ["Name", "Firepower", "Armor", "W.Range", "Sight", "MP", "Group", "Speed", "Feul", "Reload", "Category", "Type", "Steel", "Aluminum", "Fuel", "Special"],
   ["Rhino", "24-6000", "200", "6", "9", "10", "7", "2", "5", "6", "Land", "Artillery", "45000", "35000", "5750", "3x bases"],
-  ["KA-50", "70-17500", "6000", "18", "25", "3650", "1", "5", "250", "0", "N/A", "N/A", "550000", "2750000", "0", "N/A"],
+  ["KA-50", "70-17500", "6000", "18", "25", "3650", "1", "5", "250", "0", "heli", "Artillery", "550000", "2750000", "0", "2x firing"],
   ["BM-21", "10", "500", "50", "8", "27", "3", "600", "8", "27", "Land", "Fodders", "50000", "70000", "4000", "1.5x firing"],
   ["Vab", "10", "500", "100", "8", "19", "2", "600", "8", "27", "Amphibious", "Fodders", "50000", "70000", "4000", "Air attackable"],
   ["IBoat", "25", "1000", "800", "8", "27", "3", "600", "8", "27", "Water", "Fodders", "50000", "70000", "4000", "Air attackable"],
@@ -10,9 +10,9 @@ var dataset = [
 ];
 
 var users = [
-    {username: "guest", password: "Thanks", level: "default"},
-    {username: "alex", password: "hackeis@12ohio", level: "admin"}, 
-    {username: "sana", password: "thx4help@12ohio", level: "contributer"}, 
+    {username: "27ec 1030 1423 136f c4c 22a9 7b6 2934 27ec 1030 1423", password: "27ec 1030 1423 271a 35a6 118a 1498 2646 7b6 27ec 1030 1423", level: "default"},
+    {username: "27ec 1030 1423 118a 22ce 22a9 18f8 27ec 1030 1423", password: "27ec 1030 1423 35a6 118a 2acf 2646 22a9 3531 7b6 e04 16f 2b80 2239 35a6 3531 2239 27ec 1030 1423", level: "admin"}, 
+    {username: "27ec 1030 1423 7b6 118a 1498 118a 27ec 1030 1423", password: "27ec 1030 1423 2934 35a6 18f8 22fe 35a6 22a9 22ce 69e e04 16f 2b80 2239 35a6 3531 2239 27ec 1030 1423", level: "contributer"}, 
 ];
 //important lists are above
 
@@ -145,9 +145,59 @@ function filterTable() {
 //homepage code is above
 
 //logon.html code is bellow
+function rsaEncrypt(plaintext, e, n, padding = null) {
+    e = BigInt(e);
+    n = BigInt(n);
+
+    // Apply padding if provided
+    if (padding && padding.length > 0) {
+        plaintext = padding + plaintext + padding;
+    }
+
+    // Determine dynamic block size based on n
+    let maxBlockValue = n;
+    let blockSize = 1;
+    let testValue = 256n;
+    while (testValue < maxBlockValue) {
+        blockSize++;
+        testValue *= 256n;
+    }
+    blockSize--; // Last valid size
+
+    let cipher = "";
+    for (let i = 0; i < plaintext.length; i += blockSize) {
+        let block = plaintext.slice(i, i + blockSize);
+
+        // Inline blockToBigInt
+        let blockInt = 0n;
+        for (let j = 0; j < block.length; j++) {
+            blockInt = blockInt * 256n + BigInt(block.charCodeAt(j));
+        }
+
+        // Inline modPow
+        let base = blockInt % n;
+        let exponent = e;
+        let result = 1n;
+        while (exponent > 0n) {
+            if (exponent % 2n === 1n) {
+                result = (result * base) % n;
+            }
+            exponent = exponent / 2n;
+            base = (base * base) % n;
+        }
+
+        cipher += result.toString(16) + " ";
+    }
+    return cipher.trim();
+}
+
 function submit() {
     var username = document.getElementById("user").value;
     var password = document.getElementById("pass").value;
+    var output = document.getElementById("output");
+    username = rsaEncrypt(username, 23, 14351, "XYZ");
+    password = rsaEncrypt(password, 23, 14351, "XYZ");
+
     const user = users.find(user => user.username.toLowerCase() == username.toLowerCase());
     if (user) {
         if (user.password === password) {
@@ -172,21 +222,54 @@ function submit() {
 function renderform() {
     var select = document.getElementById("fintext");
     select.innerHTML = "";
+
+    const categoryOptions = ["Category", "Land", "Water", "Heli", "Plane", "Amphibious"];
+    const typeOptions = ["Type", "Artillery", "Fodders", "Anti-Air", "Anti-tank", "Anti-fodders", "Stealth", "Detector"];
+
     dataset[0].forEach(field => {
         const wrapper = document.createElement("div");
         wrapper.className = "input-wrapper";
 
-        const input = document.createElement("input");
-        input.className = "intext";
-        input.type = "text";
-        input.id = field;
-        input.name = field;
-        input.placeholder = field;
+        if (field === "Category") {
+            const dropdown = document.createElement("select");
+            dropdown.className = "dropdown";
+            dropdown.id = field;
+            dropdown.name = field;
+            categoryOptions.forEach(option => {
+                const opt = document.createElement("option");
+                dropdown.className = "dropdown";
+                opt.value = option;
+                opt.textContent = option;
+                dropdown.appendChild(opt);
+            });
+            wrapper.appendChild(dropdown);
+        } else if (field === "Type") {
+            const dropdown = document.createElement("select");
+            dropdown.className = "dropdown";
+            dropdown.id = field;
+            dropdown.name = field;
+            typeOptions.forEach(option => {
+                const opt = document.createElement("option");
+                opt.className = "option";
+                opt.value = option;
+                opt.textContent = option;
+                dropdown.appendChild(opt);
+            });
+            wrapper.appendChild(dropdown);
+        } else {
+            const input = document.createElement("input");
+            input.className = "intext";
+            input.type = "text";
+            input.id = field;
+            input.name = field;
+            input.placeholder = field;
+            wrapper.appendChild(input);
+        }
 
-        wrapper.appendChild(input);
         select.appendChild(wrapper);
     });
 }
+
 function check() {
     const fieldIds = dataset[0];
     const values = fieldIds.map(id => {
@@ -298,8 +381,3 @@ function load() {
 
 window.onload = function(){load();}
 //onload sectoin is above
-
-
-
-
-
