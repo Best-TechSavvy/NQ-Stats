@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            NQ stats - Home
+        </title>
+        <script src="script.js"></script> 
+        <link rel="stylesheet" type="text/css" href="styles.css"> 
+    </head>
+    <body>
+        <!--Navigation Bar for phone bellow-->
+        <div id="sepnav">
+            <div class="navbar">
+                <div class="navbtn">
+                    <a href="form.html"><button class="btn" id="forms">Add Vehicle</button></a>
+                </div>
+                <div class="navbtn">
+                    <a href="logon.html"><button class="btn" id="Logon">login</button></a>
+                </div>
+                <div class="navbtn">
+                    <button class="btn" id="exit" onclick="exit()">X</button>
+                </div>
+            </div>
+            <div class="shown"> 
+                <h3>Select Columns to Display (Max 4)</h3>
+                <div id="phone-select"></div>
+            </div>
+        </div>
+        <!--Navigation Bar for phone above-->
+
+        <div id="basic">
+            <!--Navigation Bar bellow-->
+            <div class="navbar" id="mainbar">
+                <div class="navbtn" id="sepbtn"> <!--phone object-->
+                    <button class="btn" id="more" onclick="more()">More</button>
+                </div>
+                <div class="navbtn" id="formbtn">
+                    <a href="form.html"><button class="btn" id="forms">Add Vehicle</button></a>
+                </div>
+                <div class="search-container">
+                    <input id="query" oninput="filterTable()" type="search" name="Search bar" placeholder='Try "rhino"'>
+                </div>
+                <div class="navbtn" id="logbtn">
+                    <a href="logon.html"><button class="btn" id="logon">login</button></a>
+                </div>
+            </div>
+            <!--Navigation Bar above-->
+            <div class="main"> <!--main dynamic item for all-->
+                <div id="table" class="table"></div><!--Table-->
+                <!--check box list bellow-->
+                <div class="shown" id="compselect"> 
+                    <h3>Select Columns to Display (Max 8)</h3>
+                    <div id="column-selectors"></div>
+                </div>
+                <!--check box list bellow-->
+            </div>
+            <!--footer bellow-->
+            <div class="footer">
+                <p>&copy; 2025 Navy Quest Stats. All rights reserved. This site is powered by <a href="https://www.netlify.com/">Netlify</a>, if you want to know more about it please visit <a href="https://www.netlify.com/">netlify.com</a>.</p>
+            </div>
+            <!--Footer above-->
+        </div>
+    </body>
+</html>
