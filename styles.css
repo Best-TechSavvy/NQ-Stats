@@ -76,34 +76,35 @@ body {
     flex: 1; /* Takes up remaining space */
 }
 
+.table-wrapper {
+    display: grid;
+    gap: 0;
+}
+
+.header {
+    font-weight: bold;
+    background-color: #8e8e8e !important;
+}
+
 .row {
     display: grid;
-    grid-template-columns: repeat(12, 1fr); /* 12 columns for your dataset */
-    width: 800px;
+    grid-auto-columns: min-content; /* Columns shrink to fit content */
+    grid-auto-flow: column;
 }
 
 .cell {
     padding: 8px;
     border: 1px solid #ccc;
     background-color: #f9f9f9;
-    text-align: center;
+    text-align: left;       /* Text stays left */
     box-sizing: border-box;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-width: 110px;
-}
-
-.header {
-    font-weight: bold;
-    background-color: #ddd;
+    overflow: visible;
+    text-overflow: unset;
+    display: block;
 }
 
 .sort-btn {
-    margin-left: 5px;
     padding: 2px 6px;
     font-size: 12px;
     cursor: pointer;
@@ -252,3 +253,4 @@ select.dropdown:focus {
     }
 }
 /*responsive styles above*/
+

@@ -61,48 +61,63 @@ function createColumnSelectors(div) {
 }
 
 function renderTable(data) {
-  const container = document.getElementById("table");
-  container.innerHTML = "";
+    const container = document.getElementById("table");
+    container.innerHTML = "";
 
-  for (let i = 0; i < data.length; i++) {
-    const row = data[i];
-    const rowDiv = document.createElement("div");
-    rowDiv.className = "row";
+    // Create wrapper for rows
+    const wrapper = document.createElement("div");
+    wrapper.className = "table-wrapper";
 
-    for (let j = 0; j < dataset[0].length; j++) {
-      if (!visibleColumns.includes(j)) continue;
+    // Set grid columns dynamically based on visible columns
+    wrapper.style.display = "grid";
+    wrapper.style.gridAutoFlow = "row";
+    wrapper.style.gridTemplateColumns = visibleColumns.map(() => "minmax(1px, auto)").join(" ");
 
-      const cell = row[j];
-      const div = document.createElement("div");
-      div.className = "cell" + (i === 0 ? " header" : "");
+    // Render rows
+    data.forEach((row, i) => {
+        const rowDiv = document.createElement("div");
+        rowDiv.style.display = "contents"; // So grid children align properly
 
-      if (i === 0) {
-        const label = document.createElement("span");
-        label.textContent = cell;
+        visibleColumns.forEach(j => {
+            const div = document.createElement("div");
+            div.className = "cell" + (i === 0 ? " header" : "");
 
-        const button = document.createElement("button");
-        button.className = "sort-btn";
-        button.textContent = currentSort.column === j ? (currentSort.ascending ? "^" : "V") : "";
-        button.onclick = function () {
-          sortByColumn(j);
-        };
+            if (i === 0) {
+                // Header cell: text left, sort button right
+                const headerWrapper = document.createElement("div");
+                headerWrapper.style.display = "flex";
+                headerWrapper.style.justifyContent = "space-between";
+                headerWrapper.style.alignItems = "center";
 
-        div.appendChild(label);
-        div.appendChild(button);
-      } else {
-        // Format numbers with commas if numeric
-        if (!isNaN(cell) && cell.trim() !== "") {
-          div.textContent = Number(cell).toLocaleString();
-        } else {
-          div.textContent = cell;
-        }
-      }
+                const label = document.createElement("span");
+                label.textContent = row[j];
 
-      rowDiv.appendChild(div);
-    }
+                const button = document.createElement("button");
+                button.className = "sort-btn";
+                button.textContent = currentSort.column === j ? (currentSort.ascending ? "^" : "v") : "=";
+                button.onclick = function () {
+                    sortByColumn(j);
+                };
 
-    container.appendChild(rowDiv);
-  }
+                headerWrapper.appendChild(label);
+                headerWrapper.appendChild(button);
+                div.appendChild(headerWrapper);
+            } else {
+                // Format numbers with commas if numeric
+                if (!isNaN(row[j]) && row[j].trim() !== "") {
+                    div.textContent = Number(row[j]).toLocaleString();
+                } else {
+                    div.textContent = row[j];
+                }
+            }
+
+            rowDiv.appendChild(div);
+        });
+
+        wrapper.appendChild(rowDiv);
+    });
+
+    container.appendChild(wrapper);
 }
 
 function sortByColumn(colIndex) {
@@ -380,4 +395,5 @@ function load() {
 };
 
 window.onload = function(){load();}
+
 //onload sectoin is above
