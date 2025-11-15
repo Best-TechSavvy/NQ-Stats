@@ -17,6 +17,9 @@
                     <a href="form.html"><button class="btn" id="forms">Add Vehicle</button></a>
                 </div>
                 <div class="navbtn">
+                    <a href="flak.html"><button class="btn" id="forms">Flaks</button></a>
+                </div>
+                <div class="navbtn">
                     <a href="logon.html"><button class="btn" id="Logon">login</button></a>
                 </div>
                 <div class="navbtn">
@@ -36,8 +39,13 @@
                 <div class="navbtn" id="sepbtn"> <!--phone object-->
                     <button class="btn" id="more" onclick="more()">More</button>
                 </div>
-                <div class="navbtn" id="formbtn">
-                    <a href="form.html"><button class="btn" id="forms">Add Vehicle</button></a>
+                <div class="navbtn">
+                    <div class="navbtn" id="formbtn">
+                        <a href="form.html"><button class="btn" id="forms">Add Vehicle</button></a>
+                    </div>
+                    <div class="navbtn" id="flakbtn">
+                        <a href="flak.html"><button class="btn" id="forms">Flaks</button></a>
+                    </div>
                 </div>
                 <div class="search-container">
                     <input id="query" oninput="filterTable()" type="search" name="Search bar" placeholder='Try "rhino"'>
@@ -48,7 +56,7 @@
             </div>
             <!--Navigation Bar above-->
             <div class="main"> <!--main dynamic item for all-->
-                <div id="table" class="table"></div><!--Table-->
+                <div id="vehicletable" class="table"></div><!--Table-->
                 <!--check box list bellow-->
                 <div class="shown" id="compselect"> 
                     <h3>Select Columns to Display (Max 8)</h3>
