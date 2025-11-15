@@ -1,12 +1,25 @@
 //important lists are bellow
-var dataset = [
-  ["Name", "Firepower", "Armor", "W.Range", "Sight", "MP", "Group", "Speed", "Feul", "Reload", "Category", "Type", "Steel", "Aluminum", "Fuel", "Special"],
+var vehicle = [
+  ["Name", "Firepower", "Armor", "W.Range", "Sight", "MP", "Group", "Speed", "T-Fuel", "Reload", "Category", "Type", "Steel", "Aluminum", "B-Fuel", "Special"],
   ["Rhino", "24-6000", "200", "6", "9", "10", "7", "2", "5", "6", "Land", "Artillery", "45000", "35000", "5750", "3x bases"],
   ["KA-50", "70-17500", "6000", "18", "25", "3650", "1", "5", "250", "0", "Heli", "Artillery", "550000", "2750000", "0", "2x firing"],
+  ["Astros", "1800-450000", "750", "24", "25", "4500", "1", "2.5", "25", "20", "Land", "Artillery", "9,750,000", "2,750,000", "0", "3x bases"], 
+  ["Smerch", "1000-250000", "500", "21", "21", "2900", "1", "1.5", "150", "4", "Land", "Artillery", "1,650,00", "775,000", "0", "3x bases"], 
+  ["C1", "2350", "6000", "12", "11", "70", "7", "2", "55", "5", "Land", "Anti-fodder", "950,000", "250,000", "0", "1.5x firing"],
   ["BM-21", "10", "500", "50", "8", "27", "3", "600", "8", "27", "Land", "Fodders", "50000", "70000", "4000", "1.5x firing"],
   ["Vab", "10", "500", "100", "8", "19", "2", "600", "8", "27", "Amphibious", "Fodders", "50000", "70000", "4000", "Air attackable"],
   ["IBoat", "25", "1000", "800", "8", "27", "3", "600", "8", "27", "Water", "Fodders", "50000", "70000", "4000", "Air attackable"],
   ["Stormers", "25", "1201", "600", "8", "27", "3", "600", "8", "27", "Land", "Anti-Air", "50000", "70000", "4000", "3x Air"]
+];
+
+var flak = [
+  ["Level", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], 
+  ["Armor", "1", "2", "2", "2", "3", "3", "3", "4", "4", "5", "5", "6"], 
+  ["Weapon", "1", "1", "1", "2", "2", "2", "4", "4", "6", "6", "8", "10"], 
+  ["Min.Ran", "8", "8", "9", "9", "9", "10", "10", "10", "10", "10", "10", "10"], 
+  ["Max.Ran", "10", "10", "11", "11", "11", "12", "12", "13", "14", "14", "14", "14"], 
+  ["Build-Cost", "9", "19", "29", "49", "99", "199", "299", "499", "0", "0", "0", "0"],
+  ["Recov-Cost", "1", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]
 ];
 
 var users = [
@@ -27,7 +40,7 @@ let currentSort = {
 
 function createColumnSelectors(div) {
   const selectorContainer = document.getElementById(div);
-  const headers = dataset[0];
+  const headers = vehicle[0];
   selectorContainer.innerHTML = ""; // Clear existing
   headers.forEach((header, index) => {
     const label = document.createElement("label");
@@ -61,7 +74,7 @@ function createColumnSelectors(div) {
 }
 
 function renderTable(data) {
-    const container = document.getElementById("table");
+    const container = document.getElementById("vehicletable");
     container.innerHTML = "";
 
     // Create wrapper for rows
@@ -121,8 +134,8 @@ function renderTable(data) {
 }
 
 function sortByColumn(colIndex) {
-  const header = dataset[0];
-  const rows = dataset.slice(1);
+  const header = vehicle[0];
+  const rows = vehicle.slice(1);
 
   if (currentSort.column === colIndex) {
     currentSort.ascending = !currentSort.ascending;
@@ -151,7 +164,7 @@ function sortByColumn(colIndex) {
 
 function filterTable() {
   const input = document.getElementById("query")?.value.toLowerCase() || "";
-  const filtered = dataset.filter((row, index) => {
+  const filtered = vehicle.filter((row, index) => {
     return index === 0 || row.join(" ").toLowerCase().includes(input);
   });
   renderTable(filtered);
@@ -239,9 +252,9 @@ function renderform() {
     select.innerHTML = "";
 
     const categoryOptions = ["Category", "Land", "Water", "Heli", "Plane", "Amphibious"];
-    const typeOptions = ["Type", "Artillery", "Fodders", "Anti-Air", "Anti-tank", "Anti-fodders", "Stealth", "Detector"];
+    const typeOptions = ["Type", "Artillery", "Fodders", "Anti-Air", "Anti-tank", "Anti-fodder", "Stealth", "Detector"];
 
-    dataset[0].forEach(field => {
+    vehicle[0].forEach(field => {
         const wrapper = document.createElement("div");
         wrapper.className = "input-wrapper";
 
@@ -272,13 +285,17 @@ function renderform() {
             });
             wrapper.appendChild(dropdown);
         } else {
-            const input = document.createElement("input");
-            input.className = "intext";
-            input.type = "text";
-            input.id = field;
-            input.name = field;
-            input.placeholder = field;
-            wrapper.appendChild(input);
+          const input = document.createElement("input");
+          input.className = "intext";
+
+          // Check if field should be numeric
+          const numericFields = ["MP", "Group", "Steel", "Aluminum", "B-Fuel"];
+          input.type = numericFields.includes(field) ? "number" : "text";
+
+          input.id = field;
+          input.name = field;
+          input.placeholder = field;
+          wrapper.appendChild(input);
         }
 
         select.appendChild(wrapper);
@@ -286,7 +303,7 @@ function renderform() {
 }
 
 function check() {
-    const fieldIds = dataset[0];
+    const fieldIds = vehicle[0];
     const values = fieldIds.map(id => {
         const input = document.getElementById(id);
         return input ? input.value.trim() : "";
@@ -329,6 +346,38 @@ function copy() {
 }
 //form.html code is above
 
+//flak.html code is bellow 
+function renderflakTab(data) {
+  const container = document.getElementById("flaktable");
+  container.innerHTML = "";
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "table-wrapper";
+  wrapper.style.display = "grid";
+  wrapper.style.gridAutoFlow = "row";
+
+  // Use all columns in flak data
+  const columnCount = data[0].length;
+  wrapper.style.gridTemplateColumns = `repeat(${columnCount}, minmax(1px, auto))`;
+
+  data.forEach((row, i) => {
+    const rowDiv = document.createElement("div");
+    rowDiv.style.display = "contents";
+
+    row.forEach((cell) => {
+      const div = document.createElement("div");
+      div.className = "cell" + (i === 0 ? " header" : "");
+      div.textContent = cell;
+      rowDiv.appendChild(div);
+    });
+
+    wrapper.appendChild(rowDiv);
+  });
+
+  container.appendChild(wrapper);
+}
+//flak.html code is above 
+
 //phone object bellow
 function more(){
   var sepnav = document.getElementById("sepnav");
@@ -350,7 +399,7 @@ function load() {
   var screen = "computer";
   var width = window.innerWidth;
   var phone = ["sepnav", "sepbtn"]
-  var computer = ["formbtn", "logbtn", "compselect"]
+  var computer = ["formbtn", "logbtn", "compselect", "flakbtn"]
 
   if (width < 768) {
     screen = "phone";
@@ -366,6 +415,8 @@ function load() {
   // Run page-specific functions
   if (window.location.pathname.includes("form.html")) {
     renderform();
+  } else if (window.location.pathname.includes("flak.html")) {
+    renderflakTab(flak);
   } else if (window.location.pathname.includes("logon.html")) {
     // Add logon-specific logic here if needed
   } else {
@@ -395,5 +446,4 @@ function load() {
 };
 
 window.onload = function(){load();}
-
 //onload sectoin is above
