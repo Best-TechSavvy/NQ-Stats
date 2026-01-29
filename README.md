@@ -5,7 +5,7 @@ Thankfully, GitHub allows free public repositories with Pages services, so I’v
 Feel free to use whichever link works best for you!
 # Website Links
 
-Netlify-powered site: https://navyqueststats.netlify.app/
+Netlify-powered site: https://nqstats.netlify.app
 Powered by https://www.netlify.com/
 
 GitHub Pages backup: https://best-techsavvy.github.io/NQ-Stats/
