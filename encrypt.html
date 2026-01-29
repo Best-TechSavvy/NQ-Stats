@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>RSA Encryption Tool</title>
+        <script src="encrypt.js"></script>
+    </head>
+    <body>
+        <h1>RSA Encryption Tool</h1>
+        <div>
+            <label>Plaintext:</label><br>
+            <textarea id="plaintext" rows="4" cols="50" placeholder="Enter text to encrypt"></textarea>
+        </div>
+        <div>
+            <label>Ciphertext (Hex):</label><br>
+            <textarea id="cipher" rows="4" cols="50" placeholder="Enter hex to decrypt"></textarea>
+        </div><br>
+
+        <input id="p" type="number" placeholder="Enter prime p">
+        <input id="q" type="number" placeholder="Enter prime q">
+        <input id="e" type="number" placeholder="Enter e">
+        <input id="padding" type="text" placeholder="Optional padding"><br><br>
+
+        <button onclick="encryption('encrypt')">Encrypt</button>
+        <button onclick="encryption('decrypt')">Decrypt</button>
+    </body>
+</html>
