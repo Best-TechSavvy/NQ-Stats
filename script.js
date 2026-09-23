@@ -1,33 +1,25 @@
-//important lists are bellow
-var vehicle = [
-  ["Name", "Firepower", "Armor", "W.Range", "Sight", "MP", "Group", "Speed", "T-Fuel", "Reload", "Category", "Type", "Steel", "Aluminum", "B-Fuel", "Special"],
-  ["Rhino", "24-6000", "200", "6", "9", "10", "7", "2", "5", "6", "Land", "Artillery", "45000", "35000", "5750", "3x bases"],
-  ["KA-50", "70-17500", "6000", "18", "25", "3650", "1", "5", "250", "0", "Heli", "Artillery", "550000", "2750000", "0", "2x firing"],
-  ["Astros", "1800-450000", "750", "24", "25", "4500", "1", "2.5", "25", "20", "Land", "Artillery", "9,750,000", "2,750,000", "0", "3x bases"], 
-  ["Smerch", "1000-250000", "500", "21", "21", "2900", "1", "1.5", "150", "4", "Land", "Artillery", "1,650,00", "775,000", "0", "3x bases"], 
-  ["C1", "2350", "6000", "12", "11", "70", "7", "2", "55", "5", "Land", "Anti-fodder", "950,000", "250,000", "0", "1.5x firing"],
-  ["BM-21", "10", "500", "50", "8", "27", "3", "600", "8", "27", "Land", "Fodders", "50000", "70000", "4000", "1.5x firing"],
-  ["Vab", "10", "500", "100", "8", "19", "2", "600", "8", "27", "Amphibious", "Fodders", "50000", "70000", "4000", "Air attackable"],
-  ["IBoat", "25", "1000", "800", "8", "27", "3", "600", "8", "27", "Water", "Fodders", "50000", "70000", "4000", "Air attackable"],
-  ["Stormers", "25", "1201", "600", "8", "27", "3", "600", "8", "27", "Land", "Anti-Air", "50000", "70000", "4000", "3x Air"]
-];
+//Game data from Json file is loaded bellow
+async function loadGameData() {
+  try {
+    // 1. Fetch the entire data package
+    console.log("Fetching game data...");
+    const response = await fetch('./data.json');
+    const gameData = await response.json(); 
+    
+    console.log("Loading game data...");
+    // 2. Extract your individual 2D arrays
+    var vehicle = gameData.vehicle;
+    var flak = gameData.flak;
+    var users = gameData.users;
+    console.log("Game data loaded successfully.");
 
-var flak = [
-  ["Level", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], 
-  ["Armor", "1", "2", "2", "2", "3", "3", "3", "4", "4", "5", "5", "6"], 
-  ["Weapon", "1", "1", "1", "2", "2", "2", "4", "4", "6", "6", "8", "10"], 
-  ["Min.Ran", "8", "8", "9", "9", "9", "10", "10", "10", "10", "10", "10", "10"], 
-  ["Max.Ran", "10", "10", "11", "11", "11", "12", "12", "13", "14", "14", "14", "14"], 
-  ["Build-Cost", "0", "9", "19", "29", "49", "99", "199", "299", "499", "999", "1999", "2999"],
-  ["Recov-Cost", "0", "1", "3", "5", "9", "19", "29", "49", "69", "99", "149", "199"]
-];
+  } catch (error) {
+    console.error("Error fetching game data:", error);
+  }
+}
 
-var users = [
-    {username: "27ec 1030 1423 136f c4c 22a9 7b6 2934 27ec 1030 1423", password: "27ec 1030 1423 271a 35a6 118a 1498 2646 7b6 27ec 1030 1423", level: "default"},
-    {username: "27ec 1030 1423 118a 22ce 22a9 18f8 27ec 1030 1423", password: "27ec 1030 1423 35a6 118a 2acf 2646 22a9 3531 7b6 e04 16f 2b80 2239 35a6 3531 2239 27ec 1030 1423", level: "admin"}, 
-    {username: "27ec 1030 1423 7b6 118a 1498 118a 27ec 1030 1423", password: "27ec 1030 1423 2934 35a6 18f8 22fe 35a6 22a9 22ce 69e e04 16f 2b80 2239 35a6 3531 2239 27ec 1030 1423", level: "contributer"}, 
-];
-//important lists are above
+document.addEventListener('DOMContentLoaded', loadGameData);
+//Game data from Json file is loaded Above
 
 //homepage code is bellow
 var maxVisibleColumns = 8;
@@ -447,5 +439,3 @@ function load() {
 
 window.onload = function(){load();}
 //onload sectoin is above
-
-
