@@ -1,25 +1,30 @@
-//Game data from Json file is loaded bellow
+//important lists are bellow
+let vehicle = [];
+let flak = [];
+let users = [];
+
 async function loadGameData() {
   try {
-    // 1. Fetch the entire data package
     console.log("Fetching game data...");
     const response = await fetch('./data.json');
-    const gameData = await response.json(); 
-    
-    console.log("Loading game data...");
-    // 2. Extract your individual 2D arrays
-    var vehicle = gameData.vehicle;
-    var flak = gameData.flak;
-    var users = gameData.users;
-    console.log("Game data loaded successfully.");
 
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const gameData = await response.json();
+    vehicle = gameData.vehicle || [];
+    flak = gameData.flak || [];
+    users = gameData.users || [];
+
+    console.log("Game data loaded successfully.");
+    return { vehicle, flak, users };
   } catch (error) {
     console.error("Error fetching game data:", error);
+    return { vehicle: [], flak: [], users: [] };
   }
 }
-
-document.addEventListener('DOMContentLoaded', loadGameData);
-//Game data from Json file is loaded Above
+//important lists are above
 
 //homepage code is bellow
 var maxVisibleColumns = 8;
@@ -32,8 +37,10 @@ let currentSort = {
 
 function createColumnSelectors(div) {
   const selectorContainer = document.getElementById(div);
-  const headers = vehicle[0];
+  const headers = vehicle[0] || [];
   selectorContainer.innerHTML = ""; // Clear existing
+  visibleColumns = [];
+
   headers.forEach((header, index) => {
     const label = document.createElement("label");
     label.style.marginRight = "10px";
@@ -437,5 +444,10 @@ function load() {
   }
 };
 
-window.onload = function(){load();}
+async function initApp() {
+  await loadGameData();
+  load();
+}
+
+window.onload = initApp;
 //onload sectoin is above
