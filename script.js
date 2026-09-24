@@ -29,6 +29,16 @@ async function loadGameData() {
 //homepage code is bellow
 var maxVisibleColumns = 8;
 let visibleColumns = [];
+const CELL_BREAK_MARKER = ",,,";
+
+function renderCellText(element, value) {
+  String(value).split(CELL_BREAK_MARKER).forEach((part, index, parts) => {
+    if (index > 0) {
+      element.appendChild(document.createElement("br"));
+    }
+    element.appendChild(document.createTextNode(part));
+  });
+}
 
 let currentSort = {
   column: null,
@@ -102,7 +112,7 @@ function renderTable(data) {
                 headerWrapper.style.alignItems = "center";
 
                 const label = document.createElement("span");
-                label.textContent = row[j];
+                renderCellText(label, row[j]);
 
                 const button = document.createElement("button");
                 button.className = "sort-btn";
@@ -119,7 +129,7 @@ function renderTable(data) {
                 if (!isNaN(row[j]) && row[j].trim() !== "") {
                     div.textContent = Number(row[j]).toLocaleString();
                 } else {
-                    div.textContent = row[j];
+                  renderCellText(div, row[j]);
                 }
             }
 
@@ -251,7 +261,9 @@ function renderform() {
     select.innerHTML = "";
 
     const categoryOptions = ["Category", "Land", "Water", "Heli", "Plane", "Amphibious"];
-    const typeOptions = ["Type", "Artillery", "Fodders", "Anti-Air", "Anti-tank", "Anti-fodder", "Stealth", "Detector"];
+    const typeOptions = ["Type", "Artillery", "Fodders", "Anti-Air", "Anti-tank", "Anti-fodder", "Stealth", "Detector", "Ammo"];
+    const specialOptions = ["Special", "Multi-Target", "1.5x firing", "2x firing", "3x bases", "3x Air", "Air attackable", "None"];
+	const baseOptions = ["Base", "Home", "Water", "Land", "Air", "Water-Heli", "Land-Heli"];
 
     vehicle[0].forEach(field => {
         const wrapper = document.createElement("div");
@@ -283,18 +295,94 @@ function renderform() {
                 dropdown.appendChild(opt);
             });
             wrapper.appendChild(dropdown);
+        } else if (field === "Special") {
+          wrapper.id = field;
+          wrapper.className = "input-wrapper checkbox-dropdown";
+
+          const dropdownButton = document.createElement("button");
+          dropdownButton.type = "button";
+          dropdownButton.className = "dropdown checkbox-dropdown-button";
+          dropdownButton.textContent = "Special";
+
+          const optionsMenu = document.createElement("div");
+          optionsMenu.className = "checkbox-dropdown-menu";
+          optionsMenu.hidden = true;
+
+          dropdownButton.onclick = () => {
+            optionsMenu.hidden = !optionsMenu.hidden;
+          };
+
+          specialOptions.slice(1).forEach(option => {
+            const optionLabel = document.createElement("label");
+            optionLabel.className = "checkbox-option";
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.name = field;
+            checkbox.value = option;
+            checkbox.onchange = () => {
+              const selected = Array.from(optionsMenu.querySelectorAll("input:checked"))
+                .map(input => input.value);
+              dropdownButton.textContent = selected.length > 0 ? selected.join(", ") : "Special";
+            };
+
+            optionLabel.appendChild(checkbox);
+            optionLabel.appendChild(document.createTextNode(option));
+            optionsMenu.appendChild(optionLabel);
+          });
+
+          wrapper.appendChild(dropdownButton);
+          wrapper.appendChild(optionsMenu);
+		} else if (field === "Base") {
+          wrapper.id = field;
+          wrapper.className = "input-wrapper checkbox-dropdown";
+
+          const dropdownButton = document.createElement("button");
+          dropdownButton.type = "button";
+          dropdownButton.className = "dropdown checkbox-dropdown-button";
+          dropdownButton.textContent = "Base";
+
+          const optionsMenu = document.createElement("div");
+          optionsMenu.className = "checkbox-dropdown-menu";
+          optionsMenu.hidden = true;
+
+          dropdownButton.onclick = () => {
+            optionsMenu.hidden = !optionsMenu.hidden;
+          };
+
+          baseOptions.slice(1).forEach(option => {
+            const optionLabel = document.createElement("label");
+            optionLabel.className = "checkbox-option";
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.name = field;
+            checkbox.value = option;
+            checkbox.onchange = () => {
+              const selected = Array.from(optionsMenu.querySelectorAll("input:checked"))
+                .map(input => input.value);
+              dropdownButton.textContent = selected.length > 0 ? selected.join(", ") : "Base";
+            };
+
+            optionLabel.appendChild(checkbox);
+            optionLabel.appendChild(document.createTextNode(option));
+            optionsMenu.appendChild(optionLabel);
+          });
+
+          wrapper.appendChild(dropdownButton);
+          wrapper.appendChild(optionsMenu);
         } else {
-          const input = document.createElement("input");
-          input.className = "intext";
+			const input = document.createElement("input");
+			input.className = "intext";
 
-          // Check if field should be numeric
-          const numericFields = ["MP", "Group", "Steel", "Aluminum", "B-Fuel"];
-          input.type = numericFields.includes(field) ? "number" : "text";
+			// Check if field should be numeric
+			const numericFields = ["MP", "Group", "Steel", "Aluminum", "B-Fuel", "Ammo"];
+			input.type = numericFields.includes(field) ? "number" : "text";
 
-          input.id = field;
-          input.name = field;
-          input.placeholder = field;
-          wrapper.appendChild(input);
+			input.id = field;
+			input.name = field;
+			input.placeholder = field;
+			wrapper.appendChild(input);
         }
 
         select.appendChild(wrapper);
@@ -304,9 +392,17 @@ function renderform() {
 function check() {
     const fieldIds = vehicle[0];
     const values = fieldIds.map(id => {
+        const checkboxGroup = document.getElementById(id);
+        if (checkboxGroup?.classList.contains("checkbox-dropdown")) {
+            return Array.from(checkboxGroup.querySelectorAll('input[type="checkbox"]:checked'))
+                .map(input => input.value)
+                .join(",,,");
+        }
+
         const input = document.getElementById(id);
         return input ? input.value.trim() : "";
     });
+
 
     // Only proceed if all fields are filled
     if (values.every(v => v !== "")) {
@@ -318,30 +414,56 @@ function check() {
 
         // Clear all input fields
         fieldIds.forEach(id => {
-            const input = document.getElementById(id);
-            if (input) input.value = "";
+          const checkboxGroup = document.getElementById(id);
+          if (checkboxGroup?.classList.contains("checkbox-dropdown")) {
+            checkboxGroup.querySelectorAll('input[type="checkbox"]').forEach(input => {
+              input.checked = false;
+            });
+            checkboxGroup.querySelector(".checkbox-dropdown-button").textContent = id;
+            return;
+          }
+
+          const input = document.getElementById(id);
+          if (input) input.value = "";
         });
     }
 }
 
-function copy() {
-    const text = document.getElementById("JScode").textContent;
+async function copy() {
+  const output = document.getElementById("JScode");
+  const text = output ? output.textContent : "";
 
-    if (navigator.clipboard) {
-        navigator.clipboard.writeText(text).then(() => {
-            alert("Copied the text: " + text);
-        }).catch(err => {
-            fallbackCopy(text);
-        });
+  if (!text) {
+    alert("There is nothing to copy.");
+    return;
+  }
+
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
     } else {
-      const tempInput = document.createElement("textarea");
-      tempInput.value = text;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand("copy");
-      document.body.removeChild(tempInput);
-      alert("Copied the text: " + text);
+      throw new Error("Clipboard API unavailable");
     }
+  } catch (error) {
+    const tempInput = document.createElement("textarea");
+    tempInput.value = text;
+    tempInput.setAttribute("readonly", "");
+    tempInput.style.position = "fixed";
+    tempInput.style.opacity = "0";
+    document.body.appendChild(tempInput);
+    tempInput.focus();
+    tempInput.select();
+
+    const copied = document.execCommand("copy");
+    document.body.removeChild(tempInput);
+
+    if (!copied) {
+      alert("Copy failed. Please select and copy the text manually.");
+      return;
+    }
+  }
+
+  alert("Copied successfully.");
 }
 //form.html code is above
 
