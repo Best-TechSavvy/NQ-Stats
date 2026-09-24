@@ -71,13 +71,16 @@ body {
 .table {
     display: flex;
     flex-direction: column;
-    width: fit-content; 
+    width: fit-content;
+    min-width: 0;
     margin-left: 10px;
     flex: 1; /* Takes up remaining space */
 }
 
 .table-wrapper {
     display: grid;
+    width: 100%;
+    min-width: 0;
     gap: 0;
 }
 
@@ -98,8 +101,10 @@ body {
     background-color: #f9f9f9;
     text-align: left;       /* Text stays left */
     box-sizing: border-box;
-    white-space: nowrap;
-    overflow: visible;
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    overflow: hidden;
     text-overflow: unset;
     display: block;
 }
@@ -174,7 +179,37 @@ body {
 .input-wrapper {
   width: 100%;
 }
-select.dropdown {
+.checkbox-dropdown {
+    position: relative;
+}
+.checkbox-dropdown-button {
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.checkbox-dropdown-menu {
+    position: absolute;
+    top: calc(85%);
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+.checkbox-option {
+    display: block;
+    padding: 6px 0;
+    color: #333;
+    cursor: pointer;
+}
+.checkbox-option input {
+    margin-right: 8px;
+}
+select.dropdown,
+button.checkbox-dropdown-button {
     width: 100%;
     padding: 12px;
     margin: 8px 0;
@@ -192,7 +227,8 @@ select.dropdown {
     cursor: pointer;
 }
 
-select.dropdown:focus {
+select.dropdown:focus,
+button.checkbox-dropdown-button:focus {
     border-color: #0008ff;
     outline: none;
 }
